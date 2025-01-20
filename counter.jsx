@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
+import './App.css';
 
 const Counter = () => {
   const [count, setCount] = useState(0);
+  const [showWarning, setShowWarning] = useState(false);
 
   const increment = () => {
-    const newCount = count + 1;
-    setCount(newCount);
-    console.log(`Compteur après incrémentation : ${newCount}`);
+    setCount(count + 1);
+    setShowWarning(false); 
   };
 
   const decrement = () => {
     if (count > 0) {
-      const newCount = count - 1;
-      setCount(newCount);
-      console.log(`Compteur après décrémentation : ${newCount}`);
+      setCount(count - 1);
+      setShowWarning(false);
+    } else {
+      setShowWarning(true);
     }
   };
 
   return (
-    <div>
-      <h1>Compteur : {count}</h1>
-      <button onClick={increment}>+1</button>
-      <button onClick={decrement} disabled={count === 0}>-1</button>
-      {count === 0 && <p>Le compteur ne peut pas être inférieur à 0.</p>}
+    <div className="counter-container">
+      <div className="counter-display">{count}</div>
+      <div className="button-group">
+        <button onClick={increment} className="btn increment">+1</button>
+        <button onClick={decrement} className="btn decrement">-1</button>
+      </div>
+      {showWarning && (
+        <div className="warning">Vous ne pouvez pas aller en dessous de 0.</div>
+      )}
     </div>
   );
 };
